@@ -32,3 +32,9 @@ Configuration: two overlapping square obstacles.
 
 ## Example 4
 
+Task: path-plan to a goal from three points using the GVD in Example 3 as a roadmap.
+
+| Path on Brushfire Grid | Path on GVD | Path in Real Space |
+| --- | --- | --- |
+| ![](examples/Example4/PathOnBrushfire.png?raw=true) | ![](examples/Example3/PathOnGVD.png?raw=true) | ![](examples/Example3/PathOnRealSpace.png?raw=true)
+
