@@ -343,35 +343,59 @@ class BrushfireGrid:
         _, path = self.calculate_paths(start, goal)
         return path
 
+    def _plot_pixel_paths(self, start: np.ndarray, goal: np.ndarray, ax):
+        if start.shape[0] > 1:
+            colors = ['r', 'b', 'g', 'm']
+            for i, start_ in enumerate(start):
+                path = self.calculate_pixel_path(start_, goal)
+                c = i % len(colors)
+                ax.plot(path[:, 0], path[:, 1], color=colors[c], lw=3)
+        else:
+            path = self.calculate_pixel_path(start, goal)
+            ax.plot(path[:, 0], path[:, 1], '-r', lw=3)
+
+    def _plot_real_paths(self, start: np.ndarray, goal: np.ndarray, ax):
+        if start.shape[0] > 1:
+            colors = ['r', 'b', 'g', 'm']
+            for i, start_ in enumerate(start):
+                path = self.calculate_real_path(start_, goal)
+                c = i % len(colors)
+                ax.plot(path[:, 0], path[:, 1], color=colors[c], lw=3)
+        else:
+            path = self.calculate_pixel_path(start, goal)
+            ax.plot(path[:, 0], path[:, 1], '-r', lw=3)
+
     def plot_path_on_distances(self, start: np.ndarray, goal: np.ndarray, ax=None, save: bool = False):
-        path = self.calculate_pixel_path(start, goal)
+        if len(start.shape) < 2:
+            start = start[np.newaxis]
+
         if ax is None:
             fig = plt.figure()
             ax = fig.add_subplot(1, 1, 1)
         self.plot_distances(ax=ax)
-        ax.plot(path[:, 0], path[:, 1], '-r', lw=3)
+        self._plot_pixel_paths(start, goal, ax)
         if save:
             plt.savefig(os.path.join(self._results_dir, 'PathOnBrushfire.png'))
 
     def plot_path_on_gvd(self, start: np.ndarray, goal: np.ndarray, ax=None, save: bool = False):
-        path = self.calculate_pixel_path(start, goal)
         if ax is None:
             fig = plt.figure()
             ax = fig.add_subplot(1, 1, 1)
         self.plot_voronoi_boundary(ax=ax)
-        ax.plot(path[:, 0], path[:, 1], '-r', lw=3)
+        self._plot_pixel_paths(start, goal, ax)
         if save:
             plt.savefig(os.path.join(self._results_dir, 'PathOnGVD.png'))
 
     def plot_path_on_real(self, start: np.ndarray, goal: np.ndarray, ax=None, save: bool = False):
-        path = self.calculate_real_path(start, goal)
         if ax is None:
             fig = plt.figure()
             ax = fig.add_subplot(1, 1, 1)
         for obstacle in self._obstacles:
             obstacle.plot(ax, color='r', lw=3)
-        ax.plot(path[:, 0], path[:, 1], '-b', lw=3)
+        self._plot_real_paths(start, goal, ax)
         ax.set_aspect('equal', 'box')
+        ax.set_xlim([0, 100])
+        ax.set_ylim([0, 100])
         if save:
             plt.savefig(os.path.join(self._results_dir, 'PathOnRealSpace.png'))
 
@@ -417,7 +441,7 @@ def example_4(resolution: int = 100, save: bool = False):
 
     grid_ = BrushfireGrid(resolution, [obstacle1, obstacle2], results_name='Example4')
 
-    start = np.array([10, 40])
+    start = np.array([[10, 40], [60, 20], [40, 60]])
     goal = np.array([70, 80])
 
     grid_.plot_path_on_distances(start, goal, save=save)
@@ -435,4 +459,5 @@ def run_examples(resolution: int = 100, save: bool = False):
 
 
 if __name__ == '__main__':
-    run_examples()
+    # run_examples()
+    example_4(resolution=200, save=True)
