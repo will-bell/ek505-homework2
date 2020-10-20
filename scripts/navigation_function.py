@@ -113,13 +113,17 @@ class NavigationFunction2D:
     def calculate_path(self, start: np.ndarray, max_steps: int = 10000, epsilon: float = None, scale_magnitude: float = None) -> np.ndarray:
         epsilon = self._epsilon if epsilon is None else epsilon
 
+        starting_distance = distance(start, self._goal)
+
         path = np.zeros((max_steps, 2))
         path[0] = start
         step = 1
         while distance(path[step - 1], self._goal) > EPS and step < max_steps:
             grad = self._evaluate_grad_phi(path[step - 1])
             if scale_magnitude is not None:
-                grad = scale_magnitude * grad / np.linalg.norm(grad)
+                d2goal = min(distance(path[step - 1], self._goal), starting_distance)
+                eta = (d2goal / starting_distance)**2
+                grad = eta * scale_magnitude * grad / np.linalg.norm(grad)
             path[step] = path[step - 1] - epsilon * grad
             step += 1
 
