@@ -85,3 +85,17 @@ Task: path-plan to a goal from three points using the GVD in Example 3 as a road
 | Path on Brushfire Grid | Path on GVD | Path in Real Space |
 | --- | --- | --- |
 | ![](examples/Example4/PathOnBrushfire.png?raw=true) | ![](examples/Example4/PathOnGVD.png?raw=true) | ![](examples/Example4/PathOnRealSpace.png?raw=true)
+
+This result demonstrates some important properties of the GVD in the brushfire grid:
+
+* Accessibility
+
+  * A trajectory can be made to reach a point on the roadmap from any point in the free space. In this implementation, this is done by following the path of steepest ascent in       the brushfire potential from the goal until a point on the GVD is reached.
+
+* Connectivity
+
+  * Every point on the roadmap formed by the GVD is connected to every other point on the roadmap, so a trajectory can be made to reach any point on the roadmap from another.
+
+* Departability
+
+  * A trajectory can be made to reach a point in the free space from a point on the roadmap. In this implementation, this is done by following the path of steepest ascent in         the brushfire potential from the goal until a point on the GVD is reached then reversing this path.
