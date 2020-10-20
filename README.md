@@ -1,4 +1,18 @@
-ek505-homework2
+# Question 1 - Potential-Based Planner and Navigation Functions
+
+For both methods, we will be attempting to path-plan in a planar-sphere world. The obstacles are circles inside of a circular workspace, which greatly simplifies the problem.
+
+## Potential-Based Planner
+
+| Eta = 0.1 | Eta = 0.5 |
+| --- | --- |
+| ![](examples/Potential%20Field/Eta=1e-1%20Contour.png?raw=true) | ![](examples/Potential%20Field/Eta=5e-1%20Contour.png?raw=true) |
+
+| Eta = 1 | Eta = 2 |
+| --- | --- |
+| ![](examples/Potential%20Field/Eta=1%20Contour.png?raw=true) | ![](examples/Potential%20Field/Eta=2%20Contour.png?raw=true)|
+
+First, we will discuss discuss path-planning using potential field methods. 
 
 # Question 2 - Brushfire Grid and Generalized Voronoi Diagram
 
