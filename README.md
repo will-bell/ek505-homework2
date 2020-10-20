@@ -42,6 +42,12 @@ We can tune the shape of the navigation function by varying the parameter k. Inc
 
 We can use this function to path-plan using the same gradient descent algorithm as the potential-based planner. However, this time, there is a problem. As k gets larger, the areas we need to path-plan in have very small gradients. We can scale the gradient in our algorithm before taking a step, but we would need some intelligent scheme to scale it by a large value in the flat regions and a small value in the steep regions. Instead of doing this, we can scale the **direction** of the gradient by a fixed set step size. However, if this step size is too large to meet the tolerance for reaching the goal, we can overshoot. So, we also scale the gradient by a term in the range \[0, 1\] that decreases by an inverse square law from start to finish.
 
+| 4 Paths K=3 | 4 Paths K=4 | 4 Paths K=5 |
+| --- | --- | --- |
+| ![](examples/Navigation%20Function/4%20Paths%20K=3.png?raw=true)| ![](examples/Navigation%20Function/4%20Paths%20K=4.png?raw=true) | ![](examples/Navigation%20Function/4%20Paths%20K=5.png?raw=true) |
+
+In each case, the planner successfully creates a path to the goal.
+
 # Question 2 - Brushfire Grid and Generalized Voronoi Diagram
 
 In the first three examples, we demonstrate the wave-front algorithm for generating the voronoi regions and the brushfire grid. The GVD is then simply created from the boundaries separating the Voronoi regions.
